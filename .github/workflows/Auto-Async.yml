@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   schedule:
     #自动同步：每天早上1点
-    - cron:  0 17 * * *
+    - cron: 0 17 * * *
   watch:
     types: [started]
 
