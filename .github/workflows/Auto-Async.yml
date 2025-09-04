@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   schedule:
     #自动同步：每天早上1点
-    - cron: 0 17 * * *
+    - cron: 0 * * * *
   watch:
     types: [started]
 
@@ -13,7 +13,18 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
 jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@master
+
+      - name: Cache Clean
+        run: gh cache delete --all
   merge:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
